@@ -1,0 +1,54 @@
+body{
+    display: flex; /**/
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main{
+    margin-top: 50px;
+    padding: 30px;
+    background-color: rgb(255, 165, 31);
+    border-radius: 10px;
+    animation: pablo;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+#pablo{
+    animation-name: slay;
+    animation-duration: 5s;
+}
+@keyframes slay {
+    from{
+        transform: rotate(360deg);
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.amem{
+    font-size: 50px;
+    animation-name: amem;
+    animation-duration: 5s;
+    animation-delay: 3s;
+    animation-iteration-count: infinite;
+}
+@keyframes amem {   
+    0%{
+        color: red;
+    }
+    10%{
+        color: blue;
+    }
+    20%{
+        color: green;
+    }
+    100%{
+        color: yellow;
+    }
+}
