@@ -1,54 +1,71 @@
 body{
     display: flex; /**/
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
 }
 main{
-    margin-top: 50px;
-    padding: 30px;
-    background-color: rgb(255, 165, 31);
-    border-radius: 10px;
-    animation: pablo;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.form-container{
+    flex-grow: 1;
 }
 
+
+/*
+    HEADER
+*/
+.orange, .light-navy, .navy{
+    width: 100%;
+}
+.orange{
+    height: 5px;
+    background-color: #fcb421;
+}
+.light-navy{
+    height: 8px;
+    background-color:#64c4d2;
+}
+.navy{
+    height: 13px;
+    background-color:#1094ab;
+}
+header img{
+    max-height: 50px;
+}
+/*
+    NAV
+*/
+nav ul{
+    list-style-type: none;
+    padding: 0;
+}
+nav{
+    padding: 0;
+}
+/*
+    FORM STUFF
+*/
 .form{
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
 }
-
-#pablo{
-    animation-name: slay;
-    animation-duration: 5s;
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-@keyframes slay {
-    from{
-        transform: rotate(360deg);
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
+.form-foot{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.amem{
-    font-size: 50px;
-    animation-name: amem;
-    animation-duration: 5s;
-    animation-delay: 3s;
-    animation-iteration-count: infinite;
-}
-@keyframes amem {   
-    0%{
-        color: red;
-    }
-    10%{
-        color: blue;
-    }
-    20%{
-        color: green;
-    }
-    100%{
-        color: yellow;
-    }
+.creditos, .super{
+    width: max-content;
 }
