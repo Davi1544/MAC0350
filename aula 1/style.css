@@ -34,16 +34,59 @@ main{
 header img{
     max-height: 50px;
 }
+
 /*
     NAV
 */
+nav{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
 nav ul{
     list-style-type: none;
     padding: 0;
 }
-nav{
-    padding: 0;
+.menulist{
+    margin: 0px;
+    padding: 1px 1px 1px 1px;
+    background-color: #FFFFFF;
+    background-repeat: repeat;
+    border-color: #CCCCCC;
+    border-width: 1px;
+    border-style: solid;
+    min-width: 166px;
+    list-style: none;
+    font: normal 10px Verdana;
+    color: #000000;
+    text-decoration: none;
 }
+.menulist li {
+    position: relative;
+    border: 0px solid #330;
+    background: #FFFFFF;
+    margin: 1px 0px 0px 1px;
+    font: normal 10px Verdana;
+    color: #000000;
+    text-decoration: none;
+}
+ul.menulist li.menuHeader {
+    font-family: verdana;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    background-color: #cccccc;
+    padding: 4px;
+}
+.menulist a {
+    display: block;
+    padding: 5px;
+    font: normal 10px Verdana;
+    color: #000000;
+    text-decoration: none;
+}
+
 /*
     FORM STUFF
 */
@@ -66,6 +109,20 @@ form{
     justify-content: center;
     align-items: center;
 }
-.creditos, .super{
+.creditos{
     width: max-content;
+}
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 900px) {
+    main{
+        flex-direction: column-reverse;
+    }
+}
+@media (max-width: 600px) {
+    #usp-logo-texto{
+        display: none;
+    }
 }
