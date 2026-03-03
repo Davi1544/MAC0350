@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="alternarLuz()">TROCAR</button>
+    <span id="toogle-text">A luz está APAGADA</span>
+    <script>
+        function alternarLuz(){
+            elemento_texto = document.querySelector("#toogle-text")
+
+            if(elemento_texto.innerHTML === "A luz está APAGADA"){
+               elemento_texto.innerHTML = "A luz está ACESA"
+            }else{
+                elemento_texto.innerHTML = "A luz está APAGADA"
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+O exercício em sala da aula 2 foi a criação do júpiter melhorado e adicionar responsividade
