@@ -8,6 +8,10 @@ body{
 ul{
     padding-left: 20px;
 }
+a{
+    padding: 0;
+    margin: 0;
+}
 
 header, footer{
     display: flex;
@@ -69,4 +73,10 @@ footer a{
     .main-starter-container img{
         display: none;
     }   
+    header, footer{
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        font-size: 12px;
+    }
 }
