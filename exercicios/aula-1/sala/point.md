@@ -1,1 +1,1 @@
-O exercício em sala da aula 1 foi a criação do júpiter melhorado
+O exercício em sala da aula 1 foi a criação do júpiter melhorado e adicionar responsividade

@@ -1,0 +1,1 @@
+O exercício em sala da aula 0 foi a criação do júpiter melhorado
