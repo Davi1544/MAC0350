@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="password" name="Password" id="password">
+        <input type="text" id="bio" placeholder="Bio">
+        <button type="button" onclick="enviarUsuario()">Salvar via JS</button>
+    </form>
+
+    <div id="resposta">
+
+    </div>
+    
+
+    <script>
+
+        async function enviarUsuario() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                password: document.getElementById('password').value,
+                bio: document.getElementById('bio').value
+            };
+
+            const resposta = await fetch('/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                alert("Usuário " + resultado.usuario + " criado!");
+            } else {
+                alert("Erro ao enviar!");
+            }
+        }
+    
+    </script>
+</body>
+</html>

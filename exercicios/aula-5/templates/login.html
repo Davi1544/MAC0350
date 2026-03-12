@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="password" name="Password" id="password">
+        <button type="button" onclick="enviarUsuario()">Salvar via JS</button>
+    </form>
+
+    <div id="resposta">
+
+    </div>
+    
+
+    <script>
+
+        async function enviarUsuario() {
+            const dados = {
+                nome: document.getElementById('nome').value,
+                password: document.getElementById('password').value,
+            };
+
+            const resposta = await fetch('/loginTrial', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            document.getElementById("resposta").innerHTML = resposta
+
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                alert("Login bem sucedido");
+            } else {
+                alert("Erro no login");
+            }
+        }
+    
+    </script>
+</body>
+</html>
