@@ -28,7 +28,7 @@
                 bio: document.getElementById('bio').value
             };
 
-            const resposta = await fetch('/usuarios', {
+            const resposta = await fetch('/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

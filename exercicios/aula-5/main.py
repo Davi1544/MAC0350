@@ -1,7 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends, HTTPException, status, Cookie, Response
+from typing import Annotated
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+import time
+import logging
     
 
 app = FastAPI()
@@ -16,14 +19,23 @@ class Login(BaseModel):
     nome: str
     password: str
 
-usuarios_db = []
+usuarios_db : list[Usuario] = []
 
-@app.post("/usuarios")
+
+# Monta a pasta "static" na rota "/static"
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Sintaxe recomendada: diretório como primeiro argumento posicional
+templates = Jinja2Templates(directory="templates")
+
+@app.post("/users")
 def criar_usuario(user: Usuario):
-    usuarios_db.append(user.dict())
+    usuarios_db.append(user)
+    print(user)
+    print(usuarios_db)
     return {"usuario": user.nome}
 
-@app.get("/signup")
+@app.get("/")
 def open_user(request: Request):
     return templates.TemplateResponse(
         request=request, name="sign-up.html"
@@ -35,27 +47,50 @@ def open_user(request: Request):
         request=request, name="login.html"
     )
 
-@app.get("/loginTrial")
-def login(login : Login):
-    for user in usuarios_db:
-        if(user.name == login.name and user.password == login.password):
-            return templates.TemplateResponse(
-                request=request, name="user.html", context={"user": user}
-            )
-    return usuarios_db
+@app.post("/login")
+def login(login : Login, response: Response):
+    # Buscamos o usuário usando um laço simples
+    usuario_encontrado = None
+    for u in usuarios_db:
+        print(u)
+        if u.nome == login.nome and u.password == login.password:
+            usuario_encontrado = u
+            break
+    
+    if not usuario_encontrado:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+    
+    # O servidor diz ao navegador: "Guarde esse nome no cookie 'session_user'"
+    response.set_cookie(key="session_user", value=usuario_encontrado.nome)
+    return {"message": "Logado com sucesso"}
 
+# 2. A Dependência: Lendo o Cookie
+def get_active_user(session_user: Annotated[str | None, Cookie()] = None):
+    print("SESSION USER -> " + session_user)
 
-# Monta a pasta "static" na rota "/static"
-app.mount("/static", StaticFiles(directory="static"), name="static")
+    # O FastAPI busca automaticamente um cookie chamado 'session_user'
+    if not session_user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Acesso negado: você não está logado."
+        )
+    
+    print("SESSION USER -> " + session_user)
 
-# Sintaxe recomendada: diretório como primeiro argumento posicional
-templates = Jinja2Templates(directory="templates")
+    user = next((u for u in usuarios_db if u.nome == session_user), None)
+    if not user:
+        raise HTTPException(status_code=401, detail="Sessão inválida")
+    
+    return user
 
-@app.get("/perfil")
-def ver_perfil(request: Request, logado: bool = False):
-    user = {"nome": "Rodrigo", "admin": True} if logado else None
+# 3. Rota Protegida
+@app.get("/home")
+def show_profile(request: Request, user: Usuario = Depends(get_active_user)):
+    print(user)
     return templates.TemplateResponse(
-        request=request, name="perfil.html", context={"user": user}
+        request=request, 
+        name="perfil.html", 
+        context={"user": user.nome, "bio": user.bio}
     )
 
 @app.get("/home")
@@ -71,3 +106,31 @@ def listar_posts(request: Request):
         request=request, name="blog.html", context={"posts": db_posts}
     )
     
+
+
+
+
+#
+# MIDDLEWARE
+#
+# Configuração básica de log para aparecer no terminal
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("API")
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+# 1. Código executado ANTES da rota
+    start_time = time.perf_counter()
+
+    # 2. A requisição viaja até a rota e volta como resposta
+    response = await call_next(request)
+
+    # 3. Código executado DEPOIS da rota
+    process_time = time.perf_counter() - start_time
+
+    # Adicionamos um header customizado na resposta para o cliente ver
+    response.headers["X-Process-Time"] = str(process_time)
+
+    logger.info(f"Rota: {request.url.path} | Tempo: {process_time:.4f}s")
+
+    return response
