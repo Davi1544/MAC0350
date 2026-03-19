@@ -1,0 +1,6 @@
+#!/aki/mac0350/Downloads/MAC0350/exercicios/aula-7/.venv/bin/python
+import sys
+from websockets.cli import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(main())
