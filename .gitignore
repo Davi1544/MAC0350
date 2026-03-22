@@ -1,0 +1,52 @@
+# Virtual environments
+
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Pylance / VS Code
+
+.vscode/
+**pylance**/
+
+# Environment variables
+
+.env
+.env.*
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+*.log
+
+# SQLite database (optional, remove if you want to track it)
+
+*.db
+
+# Pytest / coverage
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Mypy / type checkers
+
+.mypy_cache/
+.dmypy.json
+
+# Build / distribution
+
+build/
+dist/
+*.egg-info/

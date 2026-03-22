@@ -7,7 +7,8 @@
 </head>
 <body>
     {% if user %}
-    <h1>Painel de {{ user.nome }}</h1>
+    <h1>Painel de {{ user }}</h1>
+    <h2>Bio: {{ bio }}</h2>
     {% if user.admin %}
         <span style="color: red;">Acesso Administrativo Ativo</span>
     {% endif %}

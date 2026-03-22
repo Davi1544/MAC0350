@@ -8,8 +8,8 @@
 <body>
 
     <form>
-        <input type="text" id="nome" placeholder="Nome">
-        <input type="password" name="Password" id="password">
+        <input type="text" name="nome" id="nome" placeholder="Nome">
+        <input type="email" name="email" id="email" placeholder="Email">
         <button type="button" onclick="enviarUsuario()">Salvar via JS</button>
     </form>
 
@@ -23,10 +23,10 @@
         async function enviarUsuario() {
             const dados = {
                 nome: document.getElementById('nome').value,
-                password: document.getElementById('password').value,
+                email: document.getElementById('email').value,
             };
 
-            const resposta = await fetch('/login', {
+            const resposta = await fetch('/alunos', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -38,9 +38,9 @@
 
             if (resposta.ok) {
                 const resultado = await resposta.json();
-                alert("Login bem sucedido");
+                alert("Deu certo!!");
             } else {
-                alert("Erro no login");
+                alert("Deu errado!!!");
             }
         }
     
