@@ -42,14 +42,14 @@ def criar_tarefa(tarefa: Tarefa):
 @app.get("/alunos")
 def listar_alunos():
     with Session(engine) as session:
+<<<<<<< HEAD
         # Implemente aqui o comando para retornar: 
         # A lista de TODOS os alunos 
-        # cadastrados no banco de dados.
         query = select(Aluno)
         return session.exec(query).all()
-
-
-@app.get("/tarefas")
+=======
+        return session.exec(select(Aluno)).all()
+>>>>>>> 5d5055bdc1990fc27fd112c2f51e9029e0497458
 def listar_tarefas():
     with Session(engine) as session:
         return session.exec(select(Tarefa)).all()
@@ -63,12 +63,15 @@ def listar_tarefas_do_aluno(aluno_nusp: int):
         # você pode fazer esta consulta tanto
         # através da estruturação de uma consulta normal SQL,
         # quanto simplesmente pegando o Aluno
+<<<<<<< HEAD
         # e retornando a propriedade implementada anteriormente.
         query = select(Aluno)
         response = {}
         if(aluno_nusp):
             query = query.where(Aluno.nusp == aluno_nusp)
                 
-        response = session.exec(query).all()
 
         return response 
+=======
+        # e retornando a propriedade implementada anteriormente.
+>>>>>>> 5d5055bdc1990fc27fd112c2f51e9029e0497458
