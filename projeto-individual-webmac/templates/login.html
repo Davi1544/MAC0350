@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form>
+        <input type="text" name="entry" id="entry" placeholder="email or handle">
+        <input type="password" name="password" id="password" placeholder="password">
+        <button type="button" onclick="login()">Sign Up</button>
+    </form>
+    
+
+    <script>
+
+        async function login() {
+            const dados = {
+                entry: document.getElementById('entry').value,
+                password: document.getElementById('password').value
+            };
+
+            const resposta = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            console.log(resposta)
+
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                alert("Deu certo!!");
+            } else {
+                alert("Deu errado!!!");
+            }
+        }
+    
+    </script>
+</body>
+</html>

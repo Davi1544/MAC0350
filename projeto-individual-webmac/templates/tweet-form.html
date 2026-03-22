@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweetar</title>
+</head>
+<body>
+
+    <form>
+        <textarea id="texto" name="texto" rows="4" cols="50" placeholder="Texto" maxlength="280">
+        
+        </textarea>
+        <button type="button" onclick="enviarTweet()">Postar novo Tweet</button>
+    </form>
+
+    <div id="resposta">
+
+    </div>
+    
+
+    <script>
+
+        async function enviarTweet() {
+            const dados = {
+                content: document.getElementById('texto').value,
+            };
+
+            const resposta = await fetch('/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            console.log(resposta)
+
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                alert("Deu certo!!");
+            } else {
+                alert("Deu errado!!!");
+            }
+        }
+    
+    </script>
+</body>
+</html>
