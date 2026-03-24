@@ -1,0 +1,28 @@
+<!-- Arquivo index.html -->
+
+<DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Meu Site</title>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js" integrity="sha384-ezjq8118wdwdRMj+nX4bevEi+cDLTbhLAeFF688VK8tPDGeLUe0WoY2MZtSla72F" crossorigin="anonymous"></script> <!-- Import do HTMX -->
+    </head>
+    <body>
+        <h1>Meu Site</h1>
+        <p>Bem vindo ao meu site!</p>
+        <nav>
+            <button hx-get="/home/pagina1"
+                    hx-target="main">
+                Página 1
+            </button>
+            <button hx-get="/home/pagina2"
+                    hx-target="main">
+                Página 2
+            </button>
+        </nav>
+        <hr>
+        <main>
+            <h2>Pagina 1</h2>
+            <p>Conteúdo da página 1</p>
+        </main>
+    </body>
+</html>
