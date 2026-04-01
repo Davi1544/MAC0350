@@ -1,0 +1,29 @@
+<!-- Arquivo lista.html -->
+
+
+<form hx-post="/lista" hx-target="#content" hx-select="#content" hx-swap="innerHTML">
+  <input type="text" name="busca" placeholder="Buscar..." 
+  hx-trigger="input delay:500ms"
+  hx-include="[name='busca']">
+</form>
+
+<div id="content">
+<div id="lista">
+    <ul>
+        {% for aluno in alunos %}
+            <li>{{ aluno.id }} {{ aluno.nome }}</li>
+        {% else %}
+            <li>Não há alunos</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<button hx-post="/anterior"
+    hx-target="#content"
+    hx-select="#content"
+    hx-swap="innerHTML" {%if linf%} disabled {% else %}{% endif %}>Anterior</button>
+<button hx-post="/proximo"
+    hx-target="#content"
+    hx-select="#content"
+    hx-swap="innerHTML" {%if lsup%} disabled {% else %}{% endif %}>Proximo</button>
+</div>
