@@ -1,0 +1,25 @@
+/*
+    FORMS
+*/
+input, textarea{
+    background-color: var(--linkc);
+}
+button{
+    border: none;
+}
+
+.input-text{
+    width: 100%;
+  padding: 10px 6px;
+
+  border: none;
+  border-bottom: 2px solid #ccc;
+
+  background: transparent;
+  outline: none;
+
+  font-size: 16px;
+  color: #222;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}

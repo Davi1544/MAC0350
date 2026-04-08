@@ -1,0 +1,70 @@
+main{
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.tweets{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: max-content;
+    min-width: 500px;
+
+    border: var(--fontc) solid 1px;
+    border-left: var(--fontc) solid 3px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 10px;
+}
+.tweets-header-container, h1, h3{
+    font-family: var(--stand-out-font);
+}
+h3{
+    margin-top: 10px;
+}
+.tweets-units-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tweet{
+    border-left: var(--fontc) solid 3px;
+    padding-left: 10px;
+    margin-left: 20px;
+}
+.tweet i{
+    cursor: pointer;
+}
+.tweet-content{
+    line-break: anywhere;
+    margin-bottom: 10px;
+}
+
+.tweet-button{
+    margin-bottom: 10px;
+}
+.tweet-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.tweet-header-names{
+    display: flex;
+}
+.display-user-handle{
+    font-style: italic;
+}
+
+
+.tweet-children-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.tweet-children-container.open {
+    max-height: 1000px; /* algo maior que o conteúdo esperado */
+}

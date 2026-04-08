@@ -3,13 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/base.css">
+    <link rel="stylesheet" href="../static/form.css">
+    <link rel="stylesheet" href="../static/nav.css">
+    <link rel="stylesheet" href="../static/tweet.css">
+    <script src="https://kit.fontawesome.com/f2389f6c39.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js" integrity="sha384-ezjq8118wdwdRMj+nX4bevEi+cDLTbhLAeFF688VK8tPDGeLUe0WoY2MZtSla72F" crossorigin="anonymous"></script> <!-- Import do HTMX -->
+    <link rel="icon" type="image/x-icon" href="../static/img/logo-mini.png">
     <title>Document</title>
 </head>
 <body>
 
-    {% for post in posts %}
-    <p> {{ post.content }} </p> 
-    {% endfor %}
+    <div class="content">
+        <div id="nav-container" class="nav-container"
+            hx-get="/nav"
+            hx-target="#nav-container"
+            hx-trigger="load">
 
+        </div>
+
+
+
+        <main>
+
+
+            <div class="tweets" id="tweets">
+
+                {% if perfil %}
+
+                <h1>Perfil</h1>
+
+                <div class="perfil-container" id="perfil-container"
+                    hx-get="/perfil"
+                    hx-vals='js:{handle: getHandle()}'
+                    hx-trigger="load">
+                    
+                </div>
+
+                <div class="hr"></div>
+                {% endif %}
+
+                <div class="tweets-header-container">
+                    {% if perfil %}
+                        <h1>Tweets de {{ perfil.username }}</h1>
+                    {% else %}
+                        <h1>Tweets</h1>
+                    {% endif %}
+                </div>
+
+                <i hx-get="/tweetar"
+                    hx-target="#response-box-home"
+                    class="fa-solid fa-pencil"></i>
+
+                <div id="response-box-home">
+
+                </div>
+
+                
+                <div class="tweets-units-container"
+                    id="tweets-units-container"
+                    hx-get="/lista_tweets"
+                    hx-vals='js:{
+                        ...(getHandle() ? {handle: getHandle()} : {}),
+                        ...(getTweetId() ? {tweet: getTweetId()} : {})
+                    }'
+                    hx-target="#tweets-units-container"
+                    hx-trigger="load">
+                    
+                    
+
+                </div>
+        
+            </div>
+
+
+
+
+        </main>
+        
+    </div>
+
+    <script>
+        function getHandle(){
+            return {{ handle | tojson }}
+        }
+        function getTweetId(){
+            return {{ tweet | tojson }}
+        }
+    </script>
+    <script src="../static/home.js"></script>
+    <script src="../static/lista_tweets.js"></script>
 </body>
 </html>

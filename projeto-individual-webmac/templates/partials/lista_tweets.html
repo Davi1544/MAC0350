@@ -1,0 +1,15 @@
+{% if posts %}
+    {% import "tweet_macros.html" as macros %}
+
+    {% for post in posts %}
+        {{ macros.render_tweet(post, user)}}
+    {% endfor %}
+
+{% else %}
+
+    <p>Não há <i>tweets</i> que atendem às restrições especificadas.</p>
+
+{% endif %}
+
+<script src="../static/tweet.js"></script>
+<script src="../static/lista_tweets.js"></script>

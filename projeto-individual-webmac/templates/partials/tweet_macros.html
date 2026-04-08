@@ -1,0 +1,69 @@
+{% macro render_tweet(post, user, level=0) %}
+<div class="tweet" 
+    id="tweet-{{ post.id }}">
+
+    <!-- TWEET HEADER -->
+    <div class="tweet-header">
+        <div class="tweet-header-names">
+            <p>{{ post.user.username }}</p>
+
+            <a href="/?handle={{ post.user.handle }}" 
+            rel="noopener noreferrer">
+                <p class="display-user-handle">&lt;{{ post.user.handle }}&gt;</p>
+            </a>
+        </div>
+
+
+        <span class="tweet-time" data-time="{{ post.post_date }}"></span>
+    </div>
+
+    
+    <!-- TWEET BODY -->
+    <div class="tweet-content">{{ post.content }}</div>
+
+
+    {% if post.children %} 
+    
+    <i class="toggle-replies fa-solid fa-message" data-id="{{ post.id }}" onclick="toogle_children({{ post.id }})"></i>
+    
+    {% endif %}
+
+    
+
+    <i hx-get="/tweetar?resposta_id={{ post.id }}"
+            hx-target="#response-box-{{ post.id }}"
+            class="fa-solid fa-pencil"></i>
+
+
+
+
+    {% if user and post.user.id == user.id %} 
+
+    <i class="fa-solid fa-trash-can"
+        hx-delete="/deletar_tweet/{{ post.id }}"
+        hx-target="#tweets-units-container">
+    </i> 
+    
+    {% endif %}
+
+
+
+    <div class="response-box" id="response-box-{{ post.id }}"></div>
+
+    <div class="tweet-children-container" id="tweet-children-container-{{ post.id }}">
+        {% if post.children %}
+            {% for child in post.children %}
+                {{ render_tweet(child, user, level + 1) }}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <script>
+        function toogle_children(id_tweet){
+            container = document.getElementById("tweet-children-container-"+id_tweet)
+            container.classList.toggle("open");
+        }
+    </script>
+</div>
+{% endmacro %}

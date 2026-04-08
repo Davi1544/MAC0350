@@ -3,15 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="../static/base.css">
+    <link rel="stylesheet" href="../static/form.css">
+    <link rel="stylesheet" href="../static/login.css">
+    <link rel="icon" type="image/x-icon" href="../static/img/logo-mini.png">
+    <title>Login</title>
 </head>
 <body>
     
-    <form>
-        <input type="text" name="entry" id="entry" placeholder="email or handle">
-        <input type="password" name="password" id="password" placeholder="password">
-        <button type="button" onclick="login()">Sign Up</button>
-    </form>
+
+    <main>
+
+        <div class="picture-container">
+            <img src="../static/img/full-logo.png" alt="">
+        </div>
+
+        <div class="important-container">
+
+            <h1 id="title">Login</h1>
+
+            <div class="login-form">
+                <form>
+                    <input type="text" name="entry" id="entry" placeholder="email or handle">
+                    <input type="password" name="password" id="password" placeholder="password">
+                    <button type="button" onclick="login()">Login</button>
+                </form>
+            </div>
+
+            <div class="signup-form">
+                <form>
+                    <input type="text" name="username" id="su-username" placeholder="username">
+                    <input type="text" name="handle" id="su-handle" placeholder="handle">
+                    <input type="text" name="email" id="su-email" placeholder="email">
+                    <input type="password" name="password" id="su-password" placeholder="password">
+                    <button type="button" onclick="signup()">Sign Up</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="toogle-link-container">
+            <a href="" id="toogle-link">Não tem conta? Crie sua conta</a>
+        </div>
+
+    </main>
+
+
     
 
     <script>
@@ -34,12 +71,94 @@
 
             if (resposta.ok) {
                 const resultado = await resposta.json();
-                alert("Deu certo!!");
+                if (resultado.redirect) {
+                    window.location.href = resultado.redirect; // go to homepage
+                }
+            } else {
+                alert("Deu errado!!!");
+            }
+        }
+
+
+
+        async function signup() {
+            const dados = {
+                username: document.getElementById('su-username').value,
+                handle: document.getElementById('su-handle').value,
+                email: document.getElementById('su-email').value,
+                password: document.getElementById('su-password').value
+            };
+
+            const resposta = await fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            console.log(resposta)
+
+            if (resposta.ok) {
+                const resultado = await resposta.json();
+                if (resultado.redirect) {
+                    window.location.href = resultado.redirect; // go to homepage
+                }
             } else {
                 alert("Deu errado!!!");
             }
         }
     
     </script>
+
+    <script>
+    // Cache DOM elements
+    const loginForm = document.querySelector('.login-form');
+    const signupForm = document.querySelector('.signup-form');
+    const pageTitle = document.querySelector('title');
+    const h1Title = document.getElementById('title');
+    const toggleLink = document.getElementById('toogle-link');
+
+    // State: true = login, false = signup
+    let isLogin = true;
+
+    function toggleForm(event) {
+        event.preventDefault(); // prevent default link behavior
+
+        if (isLogin) {
+            // Show signup form, hide login
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+
+            // Update titles
+            pageTitle.textContent = 'Cadastro';
+            h1Title.textContent = 'Cadastro';
+
+            // Update toggle link
+            toggleLink.textContent = 'Já tem conta? Faça login';
+        } else {
+            // Show login form, hide signup
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+
+            // Update titles
+            pageTitle.textContent = 'Login';
+            h1Title.textContent = 'Login';
+
+            // Update toggle link
+            toggleLink.textContent = 'Não tem conta? Crie sua conta';
+        }
+
+        // Flip state
+        isLogin = !isLogin;
+    }
+
+    // Initialize forms
+    signupForm.style.display = 'none'; // hide signup by default
+    loginForm.style.display = 'block';
+
+    // Attach toggle event
+    toggleLink.addEventListener('click', toggleForm);
+</script>
 </body>
 </html>

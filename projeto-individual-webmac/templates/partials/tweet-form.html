@@ -1,0 +1,17 @@
+<form 
+    hx-post="/post" 
+
+    {% if resposta_id %}
+        hx-target="#tweet-{{ resposta_id }}" 
+        hx-swap="outerHTML"
+    {% else %}
+        hx-target="#tweets-units-container"
+        hx-swap="innerHTML"
+    {% endif %}
+>
+    <textarea id="texto" name="texto" rows="4" cols="50" placeholder="Texto" maxlength="280"></textarea>
+    
+    <input type="hidden" name="resposta_id" value="{{ resposta_id if resposta_id else 0 }}">
+    
+    <input type="submit" value="Enviar novo tweet">
+</form>

@@ -6,7 +6,7 @@ class Usuario(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
     username: str
-    handle: str # make it unique later
+    handle: str = Field(index=True, unique=True) # make it unique later
     email: str = Field(index=True, unique=True)
     password: str
 
@@ -37,4 +37,7 @@ class Tweet(SQLModel, table=True):
     parent: Optional["Tweet"] = Relationship(
         back_populates="children", sa_relationship_kwargs={"remote_side": "Tweet.id"}
     )
-    children: List["Tweet"] = Relationship(back_populates="parent")
+    children: List["Tweet"] = Relationship(back_populates="parent",
+                                           sa_relationship_kwargs={
+            "cascade": "all, delete"
+        })

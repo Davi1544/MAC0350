@@ -1,0 +1,40 @@
+<nav>
+
+    <div class="nav-items">
+
+        <div id="nav-home">
+            <a href="/"><img id="nav-img-logo" src="../../static/img/full-logo.png" alt="" srcset=""></a>
+        </div> 
+
+        {% if user %}
+        <div id="nav-perfil">
+            <a href="/?handle={{ user.handle}}">Perfil</a>
+        </div> 
+
+        <div id="nav-sair">
+            <a hx-post="/logout" hx-trigger="click">Sair</a>
+        </div>
+        {% endif %}
+
+        <div id="nav-pesquisar">
+            <form 
+                hx-get="/lista_tweets" 
+                hx-target="#tweets-units-container"
+                hx-trigger="submit"
+            >
+                <input type="text" name="pesquisa" id="input-conteudo">
+                <input type="submit" value="Pesquisar">
+            </form>
+        </div> 
+
+    </div>       
+
+   <div class="hr"></div>
+
+</nav>
+
+<script>
+document.body.addEventListener("logout-success", function () {
+    window.location.reload(); // reload current page
+});
+</script>

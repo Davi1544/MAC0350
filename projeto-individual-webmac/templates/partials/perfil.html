@@ -1,0 +1,11 @@
+<p>Username: {{ perfil.username }}</p>
+<p>Handle: {{ perfil.handle }}</p>
+<p>Email: {{ perfil.email }}</p>
+
+{% if perfil.id == user.id %}
+    <h3>Atualizar Informações do Perfil</h3>
+    <form hx-put="/update_username" hx-target="#tweets" hx-select="#tweets" hx-swap="outerHTML">
+        <input type="text" class="input-text" name="username" id="username-change" placeholder="Novo username...">
+        <input type="submit" value="Atualizar Username">
+    </form>
+{% endif %}
