@@ -34,7 +34,9 @@
 
     {% if post.children %} 
     
-    <i class="toggle-replies fa-solid fa-message" data-id="{{ post.id }}" onclick="toggle_children({{ post.id }})"></i>
+    <i class="toggle-replies fa-solid fa-message" 
+    id="toggle-icon-{{ post.id }}"
+    data-id="{{ post.id }}" onclick="toggle_children({{ post.id }})"></i>
     
     {% endif %}
 
@@ -51,7 +53,8 @@
 
     <i class="fa-solid fa-trash-can"
         hx-delete="/deletar_tweet/{{ post.id }}"
-        hx-target="#tweets-units-container">
+        hx-target="#tweet-{{ post.id }}"
+        hx-swap="delete">
     </i> 
     
     {% endif %}
@@ -78,6 +81,8 @@
             container = document.getElementById("response-box-"+id_tweet)
             container.classList.toggle("hidden");
         }
+
+
     </script>
 </div>
 {% endmacro %}
