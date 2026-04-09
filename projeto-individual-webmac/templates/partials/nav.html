@@ -7,12 +7,14 @@
         </div> 
 
         {% if user %}
-        <div id="nav-perfil">
-            <a href="/?handle={{ user.handle}}">Perfil</a>
-        </div> 
+        <div class="nav-login-options">
+            <div id="nav-perfil">
+                <a href="/?handle={{ user.handle}}">Perfil</a>
+            </div> 
 
-        <div id="nav-sair">
-            <a hx-post="/logout" hx-trigger="click">Sair</a>
+            <div id="nav-sair">
+                <a hx-post="/logout" hx-trigger="click">Sair</a>
+            </div>
         </div>
         {% endif %}
 
@@ -21,8 +23,14 @@
                 hx-get="/lista_tweets" 
                 hx-target="#tweets-units-container"
                 hx-trigger="submit"
+                class="form-nav"
             >
                 <input type="text" name="pesquisa" id="input-conteudo">
+
+                {% if handle %}
+                <input type="hidden" name="handle" value="{{ handle }}">
+                {% endif %}
+
                 <input type="submit" value="Pesquisar">
             </form>
         </div> 

@@ -2,6 +2,16 @@
 <div class="tweet" 
     id="tweet-{{ post.id }}">
 
+    {% if level > 0 %}
+
+    <div class="parent-tweet-snap" hx-trigger="click" hx-get="/?tweet={{ post.parent.id }}">
+        Respondendo: {{ post.parent.user.username }}
+        <br>
+        {{ post.parent.content }} 
+    </div>
+
+    {% endif %}
+
     <!-- TWEET HEADER -->
     <div class="tweet-header">
         <div class="tweet-header-names">
@@ -24,7 +34,7 @@
 
     {% if post.children %} 
     
-    <i class="toggle-replies fa-solid fa-message" data-id="{{ post.id }}" onclick="toogle_children({{ post.id }})"></i>
+    <i class="toggle-replies fa-solid fa-message" data-id="{{ post.id }}" onclick="toggle_children({{ post.id }})"></i>
     
     {% endif %}
 
@@ -32,7 +42,7 @@
 
     <i hx-get="/tweetar?resposta_id={{ post.id }}"
             hx-target="#response-box-{{ post.id }}"
-            class="fa-solid fa-pencil"></i>
+            class="fa-solid fa-pencil" onclick="toggle_reply_box({{ post.id }})"></i>
 
 
 
@@ -48,7 +58,7 @@
 
 
 
-    <div class="response-box" id="response-box-{{ post.id }}"></div>
+    <div class="response-box hidden" id="response-box-{{ post.id }}"></div>
 
     <div class="tweet-children-container" id="tweet-children-container-{{ post.id }}">
         {% if post.children %}
@@ -60,9 +70,13 @@
 
 
     <script>
-        function toogle_children(id_tweet){
+        function toggle_children(id_tweet){
             container = document.getElementById("tweet-children-container-"+id_tweet)
             container.classList.toggle("open");
+        }
+        function toggle_reply_box(id_tweet){
+            container = document.getElementById("response-box-"+id_tweet)
+            container.classList.toggle("hidden");
         }
     </script>
 </div>

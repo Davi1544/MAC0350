@@ -16,6 +16,7 @@ main{
 
 main img{
     width: 20vw;
+    min-width: 200px;
 }
 
 .important-container, form{

@@ -35,6 +35,18 @@ h3{
 .tweet i{
     cursor: pointer;
 }
+
+.parent-tweet-snap{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: var(--linkc);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
 .tweet-content{
     line-break: anywhere;
     margin-bottom: 10px;
@@ -67,4 +79,36 @@ h3{
 
 .tweet-children-container.open {
     max-height: 1000px; /* algo maior que o conteúdo esperado */
+}
+
+.response-box form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.hidden{
+    display: none !important;
+}
+
+
+@media (max-width: 700px) {
+    main{
+        padding: 0;
+    }
+    .tweets{
+        min-width: 0;
+        padding: 5px;
+    }
+    .tweet{
+        margin: 0;
+        padding-left: 3px;
+        border-left: var(--fontc) solid 1px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    h3{
+        font-size: 15px;
+    }
 }

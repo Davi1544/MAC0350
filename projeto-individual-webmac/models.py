@@ -9,6 +9,7 @@ class Usuario(SQLModel, table=True):
     handle: str = Field(index=True, unique=True) # make it unique later
     email: str = Field(index=True, unique=True)
     password: str
+    bio: str
 
     tweets: List["Tweet"] = Relationship(
         back_populates="user",

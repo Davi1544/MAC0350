@@ -8,18 +8,57 @@ button{
     border: none;
 }
 
-.input-text{
+input[type="text"], input[type="password"]{
     width: 100%;
-  padding: 10px 6px;
+    padding: 5px;
 
-  border: none;
-  border-bottom: 2px solid #ccc;
+    border: none;
+    border-bottom: 2px solid #ccc;
 
-  background: transparent;
-  outline: none;
+    background: transparent;
+    outline: none;
 
-  font-size: 16px;
-  color: #222;
+    font-size: 16px;
+    color: #ccc;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea{
+    width: 100%;
+    padding: 5px;
+
+    font-family: var(--normal-font);
+
+    margin-top: 10px;
+    border: none;
+    border: 1px solid #ccc;
+
+    background: transparent;
+    outline: none;
+
+    font-size: 16px;
+    color: #ccc;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="password"]{
+    margin-bottom: 10px;
+}
+
+input[type="submit"], button{
+    padding: 10px;
+    border: none;
+    background-color: var(--linkc);
+    border-radius: 5px;
+}
+
+.submit-entry{
+    margin-bottom: 20px;
+}
+
+a{
+    color: var(--linkc);
+    font-size: 12px;
 }

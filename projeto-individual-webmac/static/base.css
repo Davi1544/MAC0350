@@ -4,7 +4,7 @@
 :root{
     --bc: #211E1F; /*#D6D6D6;*/
     --fontc: #D6D6D6; /*#211E1F;*/
-    --linkc: #585858;
+    --linkc: #686868;
     
     /*Paddings and margins*/
 
@@ -30,6 +30,13 @@ body{
     flex-direction: column;
 }
 
+
+
+@media (max-width: 700px) {
+    body{
+        font-size: 12px;
+    }
+}
 
 
 

@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/f2389f6c39.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.js" integrity="sha384-ezjq8118wdwdRMj+nX4bevEi+cDLTbhLAeFF688VK8tPDGeLUe0WoY2MZtSla72F" crossorigin="anonymous"></script> <!-- Import do HTMX -->
     <link rel="icon" type="image/x-icon" href="../static/img/logo-mini.png">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
 
@@ -18,6 +18,7 @@
         <div id="nav-container" class="nav-container"
             hx-get="/nav"
             hx-target="#nav-container"
+            hx-vals='js:{handle: getHandle()}'
             hx-trigger="load">
 
         </div>
@@ -53,9 +54,9 @@
 
                 <i hx-get="/tweetar"
                     hx-target="#response-box-home"
-                    class="fa-solid fa-pencil"></i>
+                    class="fa-solid fa-pencil" onclick="document.getElementById('response-box-home').classList.toggle('hidden')"></i>
 
-                <div id="response-box-home">
+                <div id="response-box-home" class="response-box hidden">
 
                 </div>
 

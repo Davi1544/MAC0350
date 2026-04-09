@@ -8,7 +8,7 @@ from models import Usuario, Tweet
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from typing import Annotated
+from typing import Annotated, Optional
 import logging
 import time
 from sqlalchemy import desc, or_, distinct
@@ -52,7 +52,7 @@ def get_active_user(request: Request, session_user: Annotated[str | None, Cookie
         user = session.exec(statement).first()
 
         if not user:
-            raise HTTPException(status_code=401, detail="Sessão inválida")
+            return JSONResponse({"redirect": "/login"})
 
         return user
     
@@ -104,6 +104,9 @@ def lista_tweets(request: Request,
                 tweet: int | None = None, 
                 pesquisa: str | None = None,
                 user: Usuario = Depends(get_active_user)):
+    
+    if(handle == "null"):
+        handle = None
 
     with Session(engine) as session:
         return templates.TemplateResponse(
@@ -174,13 +177,16 @@ def page_signup(request: Request):
 def signup(request: Request, user: Usuario):
     with Session(engine) as session:
         try:
+            user.bio = ""
             session.add(user)       # adiciona no banco
             session.commit()        # salva
             session.refresh(user)   # atualiza objeto
 
             # Redirect to home after signup
             # tell frontend to redirect
-            return JSONResponse({"redirect": "/"})
+            resp = JSONResponse({"redirect": "/"})
+            resp.set_cookie(key="session_user", value=str(user.id), httponly=True, path="/")
+            return resp
         
         except Exception as e:
             print(e)
@@ -251,11 +257,12 @@ def profile(request: Request,
                             "user": user}
                 )
 
-# update_username
-@app.put("/update_username")
-def update_username(
+#update_user
+@app.put("/update_user")
+def update_user(
     request: Request,
-    username: str = Form(...),
+    username: Optional[str] = Form(None),
+    bio: Optional[str] = Form(None),
     user: Usuario = Depends(get_active_user)
 ):
     if not user:
@@ -266,13 +273,15 @@ def update_username(
             select(Usuario).where(Usuario.id == user.id)
         ).first()
 
-        db_user.username = username
+        if username is not None:
+            db_user.username = username
+
+        if bio is not None:
+            db_user.bio = bio[:256]
 
         session.add(db_user)
         session.commit()
         session.refresh(db_user)
-
-        print(db_user)
 
         return templates.TemplateResponse(
             name="home.html",
@@ -410,12 +419,16 @@ def deletar_tweet(tweet_id: int, response: Response, user: Usuario = Depends(get
 # ==============================
 @app.get("/nav")
 def nav(request: Request, 
+        handle: str | None = None,
         user: Usuario = Depends(get_active_user)):
     # Retorna só o navbar (provavelmente usado via include)
     return templates.TemplateResponse(
-        request=request,
         name="nav.html",
-        context={"user":user}
+        context={
+            "request":request,
+            "user":user, 
+            "handle":handle
+        }
     )
 
 

@@ -1,7 +1,7 @@
 function timeAgo(dateString) {
   const now = new Date();
   const past = new Date(dateString);
-  const diff = (now - past) / 1000; // seconds
+  const diff = (now - past) / 1000 + 11000; // seconds
 
   if (diff < 60) return "agora";
   if (diff < 3600) return Math.floor(diff / 60) + "m atrás";
